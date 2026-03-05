@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prueba API SSO</title>
+
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#0f172a;
+    color:#e2e8f0;
+    padding:40px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+button{
+    padding:10px 20px;
+    background:#2563eb;
+    border:none;
+    border-radius:6px;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+pre{
+    background:#020617;
+    padding:20px;
+    border-radius:8px;
+    overflow:auto;
+    border:1px solid #334155;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Prueba API Autenticación</h2>
+
+<button onclick="llamarAPI()">Llamar API</button>
+
+<h3>Resultado</h3>
+
+<pre id="resultado">Esperando llamada...</pre>
+
+</div>
+
+<script>
+
+async function llamarAPI(){
+
+    const url = "https://test-sso.cfia.or.cr/WCF_SSO/WCF_SSO_PUB.SSO_EXT.svc/Authenticate/gzuniga/UHJ1ZWJhczEyMys=/75/89cbd49f2625cfcca0a96d43d0e0727d92548b24e040cc215f9371245abe38a3f4ff676ad62ce9cd1aff5534d9ed9394585952da99dd02e56420b60095494c6a";
+
+    const salida = document.getElementById("resultado");
+
+    salida.textContent = "Consultando API...";
+
+    try{
+
+        const response = await fetch(url);
+
+        if(!response.ok){
+            throw new Error("Error HTTP: " + response.status);
+        }
+
+        const data = await response.json();
+
+        salida.textContent = JSON.stringify(data, null, 4);
+
+    }
+    catch(error){
+
+        salida.textContent =
+        "Error al consumir API\n\n" + error;
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
